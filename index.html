@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- <link rel="html">  -->
+    <h1> Welcome </h1>
+</head>
+
+<body>
+    <p>Please Enter: </p>
+    <input id="input" width="100%" type="text" multiple="multiple" oninput="testInput()" />
+    <br>
+    <p id="output1"></p>
+    <p id="output2"></p>
+    <script type="text/javascript">
+        var arr = [];
+        function testInput() {
+            var tmpArr = [];
+            var tmpArr1 = [];
+            var tmpArr2 = [];
+            var value = document.getElementById("input").value.split(",");
+            var newVal;
+
+            if (value[0] === "") {
+                document.getElementById("output1").innerHTML = value;
+            }
+            if (value.indexOf("") !== -1) {
+                value.splice(value.indexOf(""), 1);
+                arr = value;
+            } else {
+                newVal = value[value.length - 1];
+
+            }
+
+            if (newVal !== undefined && newVal.indexOf("-") !== -1) {
+                var newValArr = newVal.split("-");
+                newValArr[0] = parseInt(newValArr[0]);
+                newValArr[1] = parseInt(newValArr[1]);
+                if (newValArr[0] < newValArr[1]) {
+                    for (let i = newValArr[0]; i <= newValArr[1]; i++) {
+                        tmpArr2.push(i.toString());
+                    }
+                } else {
+                    for (let i = newValArr[1]; i <= newValArr[0]; i++) {
+                        tmpArr2.push(i.toString());
+                    }
+                }
+
+            } else {
+                //empty for now
+            }
+
+            if (tmpArr2.length === 0) {
+                if (arr.indexOf(newVal) !== -1) {
+                    tmpArr.push(value[value.length - 1]);
+                } else {
+                    tmpArr1.push(value[value.length - 1]);
+                }
+            } else {
+                for (let i = 0; i < tmpArr2.length; i++) {
+                    if (arr.indexOf(tmpArr2[i]) !== -1) {
+                        arr.push(tmpArr2[i]);
+                        tmpArr.push(tmpArr2[i]);
+                    } else {
+                        tmpArr1.push(tmpArr2[i]);
+                    }
+
+                }
+
+            }
+
+            // showing what is getting printed and stored in the list
+            if (arr.length > 0) {
+                if (tmpArr1.length > 0 && tmpArr.length === 0) {
+                    document.getElementById("output1").innerHTML = tmpArr1.toLocaleString().split(/\s/).join(',') + " " + "have been added in the list";
+                } else if (tmpArr.length > 0 && tmpArr1.length > 0) {
+                    //   document.getElementById("output1").innerHTML = tmpArr1.toLocaleString().split(/\s/).join(',') + " " + "have been added in the list";
+                    document.getElementById("output1").innerHTML = tmpArr.toLocaleString().split(/\s/).join(',') + " " + "already exists \n " + "  " + tmpArr1.toLocaleString().split(/\s/).join(',') + " " + "have been added in the list";
+                } else if (tmpArr.length > 0 && tmpArr1.length === 0) {
+                    document.getElementById("output1").innerHTML = tmpArr.toLocaleString().split(/\s/).join(',') + " " + "already exists";
+                }
+            } else {
+                document.getElementById("output1").innerHTML = value + " " + "has been added in the list";
+            }
+            //     document.getElementById("output").innerHTML = tmpArr1.toLocaleString().replace(/\,/g, "") + " " + "have been added in the list";
+
+        }
+    </script>
+</body>
+
+</html>
